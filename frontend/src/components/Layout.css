@@ -40,6 +40,7 @@
 
   .header-button {
     background-color: #262438;
+    border: none;
     color: #fff;
     padding: 10px 20px;
     margin-left: 10px;

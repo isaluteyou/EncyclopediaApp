@@ -28,6 +28,15 @@ public class ArticleService {
     }
 
     public Article saveArticle(Article article, String username) {
+        String capitalizedTitle = article.getTitle().substring(0, 1).toUpperCase() +
+                article.getTitle().substring(1); // capitalize first letter before saving to collection
+
+        article.setTitle(capitalizedTitle);
+        Optional<Article> existingArticle = articleRepository.findByTitle(capitalizedTitle);
+        if (existingArticle.isPresent()) {
+            throw new IllegalArgumentException("An article with this title already exists.");
+        }
+
         Article.EditHistory editHistory = new Article.EditHistory();
         editHistory.setUsername(username);
         editHistory.setTimestamp(LocalDateTime.now());

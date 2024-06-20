@@ -29,16 +29,20 @@ const EditArticle = () => {
     setArticle({ ...article, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (user) {
-      axios.put(`http://localhost:8000/api/articles/title/${title}?username=${user.username}`, article)
-        .then(response => {
-          navigate(`/wiki/${title}`);
-        })
-        .catch(error => {
-          setError('There was an error updating the article.');
-        });
+      try {
+        const response = await axios.get(`http://localhost:8000/api/articles/exists/${article.title}`);
+        if (response.data && article.title !== title) {
+          setError('An article with this title already exists.');
+        } else {
+          await axios.put(`http://localhost:8000/api/articles/title/${title}?username=${user.username}`, article);
+          navigate(`/wiki/${article.title}`);
+        }
+      } catch (error) {
+        setError('There was an error updating the article.');
+      }
     } else {
       setError('You must be logged in to edit this article.');
     }
@@ -48,14 +52,11 @@ const EditArticle = () => {
     return <div>Loading...</div>;
   }
 
-  if (error) {
-    return <div>{error}</div>;
-  }
-
   return (
     <div>
       <h1>Editing {article.title}</h1>
       <hr />
+      {error && <p className="error-message">{error}</p>}
       <form className="edit-article-form" onSubmit={handleSubmit}>
         <div>
           <label>Title:</label><br />
@@ -72,7 +73,7 @@ const EditArticle = () => {
             name="content"
             value={article.content}
             onChange={handleInputChange}
-            rows="30"
+            rows="25"
           />
         </div>
         <button type="submit">Save</button>

@@ -35,8 +35,13 @@ public class ArticleController {
     }
 
     @PostMapping
-    public Article createArticle(@RequestBody ArticleRequest articleRequest) {
-        return articleService.saveArticle(articleRequest.getArticle(), articleRequest.getUsername());
+    public ResponseEntity<?> createArticle(@RequestBody ArticleRequest articleRequest) {
+        try {
+            Article article = articleService.saveArticle(articleRequest.getArticle(), articleRequest.getUsername());
+            return ResponseEntity.ok(article);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @PutMapping("/{id}")
@@ -76,5 +81,11 @@ public class ArticleController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/exists/{title}")
+    public ResponseEntity<Boolean> checkArticleExists(@PathVariable String title) {
+        Optional<Article> existingArticle = articleService.getArticleByTitle(title);
+        return ResponseEntity.ok(existingArticle.isPresent());
     }
 }

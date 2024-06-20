@@ -20,7 +20,7 @@ const Layout = ({ children, isLoggedIn, username, onLogout }) => {
         <div className="header-right">
           {isLoggedIn ? (
             <>
-              <span className="username">Hello, {username}</span>
+              <span className="username"><FontAwesomeIcon icon={faUserAlt} /> {username}</span>
               <button onClick={handleLogout} className="header-button">Logout</button>
             </>
           ) : (

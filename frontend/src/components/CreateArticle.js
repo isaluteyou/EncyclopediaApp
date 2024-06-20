@@ -12,17 +12,26 @@ const CreateArticle = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
 
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const capitalizedTitle = capitalizeFirstLetter(title);
     if (user) {
       try {
         await axios.post('http://localhost:8000/api/articles', {
           article: { title, content },
           username: user.username
         });
-        navigate(`/wiki/${title}`);
+        navigate(`/wiki/${capitalizedTitle}`);
       } catch (error) {
-        setError('There was an error creating the article.');
+        if (error.response && error.response.data) {
+            setError(error.response.data); // display backend error
+        } else {
+            setError('There was an error creating the article.');
+        }
       }
     } else {
       setError('You must be logged in to create an article.');
@@ -32,6 +41,7 @@ const CreateArticle = () => {
   return (
     <div>
       <h1>Creating {title}</h1>
+      <hr />
       {error && <p className="error-message">{error}</p>}
       <form onSubmit={handleSubmit} className="edit-article-form">
         <div className="form-group">
@@ -42,6 +52,7 @@ const CreateArticle = () => {
             onChange={(e) => setTitle(e.target.value)}
             required
             className="form-control"
+            maxLength="100"
           />
         </div>
         <div className="form-group">
@@ -51,7 +62,7 @@ const CreateArticle = () => {
             onChange={(e) => setContent(e.target.value)}
             required
             className="form-control"
-            rows="10"
+            rows="25"
           />
         </div>
         <button type="submit" className="edit-article-button">Create Article</button>
