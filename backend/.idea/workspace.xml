@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="SCOPE_TYPE" value="3" />
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="eeaf5954-abe2-42f8-b556-abf42b700317" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/encyclopediaApp/Components/JwtTokenUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/encyclopediaApp/Configuration/CorsConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/encyclopediaApp/Configuration/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/encyclopediaApp/Controller/ArticleController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/encyclopediaApp/Controller/AuthController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/encyclopediaApp/Controller/HomeController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/encyclopediaApp/Controller/UserController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/encyclopediaApp/DTO/ArticleRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/encyclopediaApp/EncyclopediaApp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/encyclopediaApp/Model/Article.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/encyclopediaApp/Model/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/encyclopediaApp/Repository/ArticleRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/encyclopediaApp/Repository/UserRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/encyclopediaApp/Service/ArticleService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/encyclopediaApp/Service/UserService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/app.key" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/app.pub" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/pom.xml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/encyclopediaApp/Controller/HomeController.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/encyclopediaApp/EncyclopediaApp.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/encyclopediaApp/Model/Article.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/encyclopediaApp/Repository/ArticleRepository.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/encyclopediaApp/Service/ArticleService.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/resources/application.properties" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2gsnGNlVRvuurBegVl3R1zbPVpV" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Java Projects/Encyclopedia/backend&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;
+  }
+}</component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="mvn clean" />
+      <command value="mvn clean install" />
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="EncyclopediaApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="encyclopediaApp.EncyclopediaApp" />
+      <module name="backend" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.EncyclopediaApp" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="eeaf5954-abe2-42f8-b556-abf42b700317" name="Changes" comment="" />
+      <created>1716495059321</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1716495059321</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.pub" />
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.key" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

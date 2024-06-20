@@ -1,0 +1,48 @@
+.create-article-container {
+    max-width: 70%;
+    margin: 50px auto;
+    padding: 40px 60px;
+    border: 2px solid #00bfff;
+    border-radius: 20px;
+    background-color: #000010;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease-in-out;
+    animation: fadeIn 0.5s ease-in;
+}
+
+.edit-article-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-article-form label {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+.edit-article-form input[type="text"],
+.edit-article-form textarea {
+  width: 95%;
+  padding: 10px;
+  font-size: 1.2em;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.edit-article-form button {
+  width: 200px;
+  padding: 10px;
+  font-size: 1.2em;
+  background-color: #262438;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.edit-article-form button:hover {
+  background-color: #3A384C;
+}

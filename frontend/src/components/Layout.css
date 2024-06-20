@@ -1,0 +1,140 @@
+@import url('https://fonts.googleapis.com/css2?family=MedievalSharp&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto+Slab:wght@100..900&display=swap');
+
+.layout {
+    background-color: #0C090A;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: "Roboto Slab", serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+  }
+
+  button {
+    font-family: "Roboto Slab", serif;
+  }
+
+  a {
+    color: #00bfff;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: #1500FF;
+  }
+  
+  /* Header */
+  .header {
+    position: sticky;
+    top: 0;
+    background-color: #0C090A;
+    color: #fff;
+    padding: 5px 20px;
+    border-bottom: 2px solid #00bfff;
+    text-align: left;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .header-button {
+    background-color: #262438;
+    color: #fff;
+    padding: 10px 20px;
+    margin-left: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+  
+  .header-button:hover {
+    background-color: #3A384C;
+  }
+  
+  .username, .not-logged-in {
+    margin-right: 10px;
+  }
+  
+  /* Sidebar and Content */
+  .main-container {
+    display: flex;
+    flex: 1;
+  }
+  
+  .sidebar {
+    top: 50px;
+    width: 175px;
+    background-color: #000010;
+    border-right: 2px solid #00bfff;
+    padding: 15px;
+    height: calc(100vh - 50px);
+    overflow-y: auto;
+  }
+  
+  .sidebar ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .sidebar ul li {
+    margin: 10px 0;
+  }
+  
+  .sidebar ul li a {
+    text-decoration: none;
+    color: #fff;
+  }
+  
+  .content {
+    flex: 1;
+    background-color: #121024;
+    color: #fff;
+    padding: 20px;
+  }
+
+  .article-detail {
+    padding: 20px;
+  }
+  
+  .article-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .article-header h1 {
+    margin: 0;
+  }
+  
+  .article-actions {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .article-actions button {
+    background-color: #262438;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .article-actions button:hover {
+    background-color: #3A384C;
+  }
+  
+  /* Footer */
+  .footer {
+    background-color: #0C090A;
+    color: #fff;
+    border-top: 2px solid #00bfff;
+    text-align: center;
+    padding: 10px 0;
+  }
