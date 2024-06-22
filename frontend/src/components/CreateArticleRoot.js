@@ -20,7 +20,7 @@ const CreateArticleRoot = () => {
         return;
       }
       if (title.length > 100) {
-        setError('The title cannot exceed 255 characters.');
+        setError('The title cannot exceed 100 characters.');
         return;
       }
 

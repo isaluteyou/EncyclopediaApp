@@ -2,6 +2,7 @@ package encyclopediaApp.Model;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -21,10 +22,15 @@ public class User {
     private LocalDateTime createdAt;
 
     @Column(nullable = false)
-    private String role;
-
-    @Column(nullable = false)
     private int numberOfEdits;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles;
 
     public User() {}
 
@@ -60,19 +66,19 @@ public class User {
         this.createdAt = createdAt;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
     public int getNumberOfEdits() {
         return numberOfEdits;
     }
 
     public void setNumberOfEdits(int numberOfEdits) {
         this.numberOfEdits = numberOfEdits;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }

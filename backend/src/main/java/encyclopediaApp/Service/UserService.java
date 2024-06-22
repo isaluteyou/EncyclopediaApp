@@ -1,21 +1,28 @@
 package encyclopediaApp.Service;
 
+import encyclopediaApp.Model.Role;
 import encyclopediaApp.Model.User;
+import encyclopediaApp.Repository.RoleRepository;
 import encyclopediaApp.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -25,15 +32,26 @@ public class UserService implements UserDetailsService {
         return org.springframework.security.core.userdetails.User
                 .withUsername(user.getUsername())
                 .password(user.getPassword())
-                .authorities(user.getRole())
+                .authorities(mapRolesToAuthorities(user.getRoles()))
                 .build();
+    }
+
+    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Set<Role> roles) {
+        return roles.stream()
+                .map(role -> new SimpleGrantedAuthority(role.getName()))
+                .collect(Collectors.toList());
     }
 
     public void createUser(String username, String password) {
         User user = new User();
         user.setUsername(username);
         user.setPassword(password);
-        user.setRole("ROLE_EDITOR");
+
+        Role defaultRole = findRoleByName("EDITOR").orElseThrow(() -> new RuntimeException("Role not found"));
+        Set<Role> roles = new HashSet<>();
+        roles.add(defaultRole);
+        user.setRoles(roles);
+
         user.setCreatedAt(LocalDateTime.now());
         user.setNumberOfEdits(0);
         userRepository.save(user);
@@ -57,6 +75,10 @@ public class UserService implements UserDetailsService {
 
     public void deleteUser(int id) {
         userRepository.deleteById(id);
+    }
+
+    public Optional<Role> findRoleByName(String name) {
+        return roleRepository.findByName(name);
     }
 
     public User updateUserEdits(int userId) {

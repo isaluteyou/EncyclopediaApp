@@ -3,24 +3,24 @@ import axios from './axios';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserAlt, faLock } from '@fortawesome/free-solid-svg-icons';
+import { useAuth } from './AuthContext';
 import './Auth.css';
 
 const Login = ({ onLogin }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post('http://localhost:8000/api/auth/login', { username, password });
-      localStorage.setItem('token', response.data.token);
-      localStorage.setItem('user', JSON.stringify({ username: response.data.username }));
-      onLogin(response.data.username);
+      const { token, roles } = response.data;
+      login(username, roles, token);
       navigate('/');
     } catch (error) {
-      console.error('Error during login:', error);
       setError('Invalid credentials. Please try again.');
     }
   };

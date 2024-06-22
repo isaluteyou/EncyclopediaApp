@@ -7,7 +7,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eeaf5954-abe2-42f8-b556-abf42b700317" name="Changes" comment="" />
+    <list default="true" id="eeaf5954-abe2-42f8-b556-abf42b700317" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/ArticleDetail.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/ArticleDetail.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/AuthContext.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/AuthContext.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/CreateArticleRoot.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/CreateArticleRoot.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/LogIn.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/LogIn.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

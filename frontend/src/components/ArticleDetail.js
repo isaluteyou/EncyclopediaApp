@@ -28,6 +28,24 @@ const ArticleDetail = () => {
       });
   }, [title]);
 
+  const handleDelete = async () => {
+    const confirmed = window.confirm("Are you sure you want to delete this article?");
+    if (!confirmed) {
+      return;
+    }
+
+    try {
+      await axios.delete(`http://localhost:8000/api/articles/title/${title}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+      navigate('/');
+    } catch (error) {
+      setError('There was an error deleting the article.');
+    }
+  };
+
   const handleCreateArticle = () => {
     navigate(`/create-article/${title}`);
   };
@@ -54,6 +72,10 @@ const ArticleDetail = () => {
     return <div>{error}</div>;
   }
 
+  const userHasRole = (role) => {
+    return user && user.roles && user.roles.includes(role);
+  };
+
   return (
     <div className="article-detail">
       {article ? (
@@ -63,6 +85,9 @@ const ArticleDetail = () => {
             <div className="article-actions">
               <button onClick={() => navigate(`/wiki/${title}/edit`)}>Edit</button>
               <button onClick={() => navigate(`/wiki/${title}/history`)}>History</button>
+              {(userHasRole('ADMIN') || userHasRole('MODERATOR')) && (
+                <button onClick={handleDelete}>Delete</button>
+              )}
             </div>
           </div>
           <hr />

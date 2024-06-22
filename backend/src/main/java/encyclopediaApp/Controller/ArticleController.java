@@ -6,6 +6,7 @@ import encyclopediaApp.Service.ArticleService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +24,7 @@ public class ArticleController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<Article> getArticleById(@PathVariable ObjectId id) {
         Optional<Article> article = articleService.getArticleById(id);
         return article.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
@@ -35,6 +37,7 @@ public class ArticleController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'MODERATOR', 'EDITOR')")
     public ResponseEntity<?> createArticle(@RequestBody ArticleRequest articleRequest) {
         try {
             Article article = articleService.saveArticle(articleRequest.getArticle(), articleRequest.getUsername());
@@ -45,6 +48,7 @@ public class ArticleController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<Article> updateArticle(@PathVariable ObjectId id, @RequestBody Article articleDetails, @RequestParam String username) {
         Article updatedArticle = articleService.updateArticle(id, articleDetails, username);
 
@@ -56,6 +60,7 @@ public class ArticleController {
     }
 
     @PutMapping("/title/{title}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MODERATOR', 'EDITOR')")
     public ResponseEntity<Article> updateArticle(@PathVariable String title, @RequestBody Article articleDetails, @RequestParam String username) {
         Optional<Article> article = articleService.getArticleByTitle(title);
         ObjectId articleId;
@@ -73,10 +78,12 @@ public class ArticleController {
         return ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteArticle(@PathVariable ObjectId id) {
-        if (articleService.getArticleById(id).isPresent()) {
-            articleService.deleteArticle(id);
+    @DeleteMapping("/title/{title}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MODERATOR')")
+    public ResponseEntity<Void> deleteArticleByTitle(@PathVariable String title) {
+        Optional<Article> article = articleService.getArticleByTitle(title);
+        if (article.isPresent()) {
+            articleService.deleteArticle(article.get().getId());
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.notFound().build();
@@ -84,6 +91,7 @@ public class ArticleController {
     }
 
     @GetMapping("/exists/{title}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MODERATOR', 'EDITOR')")
     public ResponseEntity<Boolean> checkArticleExists(@PathVariable String title) {
         Optional<Article> existingArticle = articleService.getArticleByTitle(title);
         return ResponseEntity.ok(existingArticle.isPresent());
