@@ -1,6 +1,8 @@
 package encyclopediaApp.Service;
 
+import encyclopediaApp.Model.ArchivedArticle;
 import encyclopediaApp.Model.Article;
+import encyclopediaApp.Repository.ArchivedArticleRepository;
 import encyclopediaApp.Repository.ArticleRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,9 @@ import java.util.Optional;
 public class ArticleService {
     @Autowired
     private ArticleRepository articleRepository;
+
+    @Autowired
+    private ArchivedArticleRepository archivedArticleRepository;
 
     public List<Article> getAllArticles() {
         return articleRepository.findAll();
@@ -46,8 +51,19 @@ public class ArticleService {
         return articleRepository.save(article);
     }
 
-    public void deleteArticle(ObjectId id) {
-        articleRepository.deleteById(id);
+    public void deleteArticle(String title, String deletedBy) {
+        Optional<Article> article = articleRepository.findByTitle(title);
+        if (article.isPresent()) {
+            ArchivedArticle archivedArticle = new ArchivedArticle();
+            archivedArticle.setTitle(article.get().getTitle());
+            archivedArticle.setContent(article.get().getContent());
+            archivedArticle.setDeletedBy(deletedBy);
+            archivedArticle.setDeletedAt(LocalDateTime.now());
+            archivedArticle.setEditHistory(article.get().getEditHistory());
+
+            archivedArticleRepository.save(archivedArticle);
+            articleRepository.delete(article.get());
+        }
     }
 
     public Article updateArticle(ObjectId id, Article articleDetails, String username) {

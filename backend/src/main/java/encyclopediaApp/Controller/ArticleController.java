@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -80,14 +81,10 @@ public class ArticleController {
 
     @DeleteMapping("/title/{title}")
     @PreAuthorize("hasAnyRole('ADMIN', 'MODERATOR')")
-    public ResponseEntity<Void> deleteArticleByTitle(@PathVariable String title) {
-        Optional<Article> article = articleService.getArticleByTitle(title);
-        if (article.isPresent()) {
-            articleService.deleteArticle(article.get().getId());
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Void> deleteArticleByTitle(@PathVariable String title, Principal principal) {
+        String username = principal.getName();
+        articleService.deleteArticle(title, username);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/exists/{title}")
