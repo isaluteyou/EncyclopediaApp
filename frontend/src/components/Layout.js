@@ -1,11 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserAlt } from '@fortawesome/free-solid-svg-icons';
 import './Layout.css';
 
 const Layout = ({ children, isLoggedIn, username, onLogout }) => {
+  const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchTerm.trim() !== '') {
+      navigate(`/search?query=${encodeURIComponent(searchTerm)}`);
+    }
+  };
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -17,6 +25,16 @@ const Layout = ({ children, isLoggedIn, username, onLogout }) => {
     <div className="layout">
       <header className="header">
         <h2><Link to="/">Skyrim Encyclopedia</Link></h2>
+        <form onSubmit={handleSearch} className="search-form">
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Search articles..."
+              className="search-input"
+            />
+            <button type="submit" className="header-button">Search</button>
+          </form>
         <div className="header-right">
           {isLoggedIn ? (
             <>

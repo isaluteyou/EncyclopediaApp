@@ -88,4 +88,9 @@ public class ArticleService {
             return null;
         }
     }
+
+    public List<Article> searchArticles(String query) {
+        return articleRepository.findByTitleContainingIgnoreCaseOrContentContainingIgnoreCase(query, query);
+    }
+
 }

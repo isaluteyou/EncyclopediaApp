@@ -38,6 +38,24 @@
     align-items: center;
   }
 
+  .search-form {
+    display: inline;
+    margin-left: 150px;
+    flex: 1;
+  }
+
+  .search-input {
+    width: 450px;
+    border: none;
+    position: static;
+    border-radius: 50px;
+    padding: 10px;
+  }
+
+  .search-input::placeholder {
+    opacity: 55%;
+  }
+
   .header-button {
     background-color: #262438;
     border: none;

@@ -93,4 +93,9 @@ public class ArticleController {
         Optional<Article> existingArticle = articleService.getArticleByTitle(title);
         return ResponseEntity.ok(existingArticle.isPresent());
     }
+
+    @GetMapping("/search")
+    public List<Article> searchArticles(@RequestParam String query) {
+        return articleService.searchArticles(query);
+    }
 }
