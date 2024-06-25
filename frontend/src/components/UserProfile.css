@@ -1,0 +1,34 @@
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+.user-profile {
+    width: 75%;
+    margin: 50px auto;
+    padding: 40px 60px;
+    border: 2px solid #00bfff;
+    border-radius: 20px;
+    background-color: #000010;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease-in-out;
+    animation: fadeIn 0.5s ease-in;
+}
+
+.user-profile-info {
+    display: flex;
+}
+
+.user-profile img {
+    width: 280px;
+    border: 1px solid #00bfff;
+    border-radius: 250px;
+}
+
+.info1 {
+    margin-left: 100px;
+}

@@ -1,8 +1,11 @@
 package encyclopediaApp.Service;
 
+import encyclopediaApp.DTO.UserProfileDTO;
 import encyclopediaApp.Model.Role;
 import encyclopediaApp.Model.User;
+import encyclopediaApp.Model.UserProfile;
 import encyclopediaApp.Repository.RoleRepository;
+import encyclopediaApp.Repository.UserProfileRepository;
 import encyclopediaApp.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -23,6 +26,10 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private UserProfileRepository userProfileRepository;
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -54,7 +61,13 @@ public class UserService implements UserDetailsService {
 
         user.setCreatedAt(LocalDateTime.now());
         user.setNumberOfEdits(0);
-        userRepository.save(user);
+
+        User savedUser = userRepository.save(user);
+
+        // create a profile for each user
+        UserProfile userProfile = new UserProfile();
+        userProfile.setUser(savedUser);
+        userProfileRepository.save(userProfile);
     }
 
     public Optional<User> findByUsername(String username) {
@@ -77,12 +90,8 @@ public class UserService implements UserDetailsService {
         userRepository.deleteById(id);
     }
 
-    public Optional<Role> findRoleByName(String name) {
-        return roleRepository.findByName(name);
-    }
-
-    public User updateUserEdits(int userId) {
-        Optional<User> optionalUser = userRepository.findById(userId);
+    public User updateUserEdits(String username) {
+        Optional<User> optionalUser = userRepository.findByUsername(username);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             user.setNumberOfEdits(user.getNumberOfEdits() + 1);
@@ -90,5 +99,31 @@ public class UserService implements UserDetailsService {
         } else {
             return null;
         }
+    }
+
+    // Roles
+    public Optional<Role> findRoleByName(String name) {
+        return roleRepository.findByName(name);
+    }
+
+    // User Profiles
+    public Optional<UserProfile> getUserProfile(int userId) {
+        return userProfileRepository.findByUserId(userId);
+    }
+
+    public UserProfile saveUserProfile(UserProfile userProfile) {
+        return userProfileRepository.save(userProfile);
+    }
+
+    public UserProfileDTO getUserProfileInfo(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
+
+        UserProfileDTO userProfileDTO = new UserProfileDTO();
+        userProfileDTO.setUsername(user.getUsername());
+        userProfileDTO.setNumberOfEdits(user.getNumberOfEdits());
+        userProfileDTO.setCreatedAt(user.getCreatedAt());
+
+        return userProfileDTO;
     }
 }

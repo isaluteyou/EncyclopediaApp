@@ -7,6 +7,8 @@ import ArticleHistory from './components/ArticleHistory';
 import CreateArticle from './components/CreateArticle';
 import CreateArticleRoot from './components/CreateArticleRoot';
 import SearchResults from './components/SearchResults';
+import UserProfile from './components/UserProfile';
+import EditUserProfile from './components/EditUserProfile';
 import SignUp from './components/SignUp';
 import Login from './components/LogIn';
 import { AuthProvider, useAuth } from './components/AuthContext';
@@ -41,6 +43,8 @@ const App = () => {
             <Route path="/wiki/:title/history" element={<ArticleHistory />} />
             <Route path="/create-article" element={<CreateArticleRoot />} />
             <Route path="/create-article/:id" element={<CreateArticle />} />
+            <Route path="/profile/:username" element={<UserProfile />} />
+            <Route path="/profile/:username/edit" element={<EditUserProfile />} />
             <Route path="/search" element={<SearchResults />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login onLogin={(username) => { setUsername(username); setIsLoggedIn(true); }} />} />

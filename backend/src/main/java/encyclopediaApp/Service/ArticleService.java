@@ -1,12 +1,17 @@
 package encyclopediaApp.Service;
 
+import encyclopediaApp.Events.ArticleEditedEvent;
 import encyclopediaApp.Model.ArchivedArticle;
 import encyclopediaApp.Model.Article;
+import encyclopediaApp.Model.User;
 import encyclopediaApp.Repository.ArchivedArticleRepository;
 import encyclopediaApp.Repository.ArticleRepository;
+import encyclopediaApp.Repository.UserRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,6 +25,9 @@ public class ArticleService {
     @Autowired
     private ArchivedArticleRepository archivedArticleRepository;
 
+    @Autowired
+    private ApplicationEventPublisher eventPublisher;
+
     public List<Article> getAllArticles() {
         return articleRepository.findAll();
     }
@@ -32,6 +40,7 @@ public class ArticleService {
         return articleRepository.findByTitle(title);
     }
 
+    @Transactional
     public Article saveArticle(Article article, String username) {
         String capitalizedTitle = article.getTitle().substring(0, 1).toUpperCase() +
                 article.getTitle().substring(1); // capitalize first letter before saving to collection
@@ -42,12 +51,15 @@ public class ArticleService {
             throw new IllegalArgumentException("An article with this title already exists.");
         }
 
+        // add history
         Article.EditHistory editHistory = new Article.EditHistory();
         editHistory.setUsername(username);
         editHistory.setTimestamp(LocalDateTime.now());
         editHistory.setOldContent("");
-
         article.setEditHistory(List.of(editHistory));
+
+        // publish an event that the article has been created
+        eventPublisher.publishEvent(new ArticleEditedEvent(this, username, capitalizedTitle));
         return articleRepository.save(article);
     }
 
@@ -83,6 +95,8 @@ public class ArticleService {
             article.setTitle(articleDetails.getTitle());
             article.setContent(articleDetails.getContent());
 
+            // publish an event that the article has been modified
+            eventPublisher.publishEvent(new ArticleEditedEvent(this, username, articleDetails.getTitle()));
             return articleRepository.save(article);
         } else {
             return null;
@@ -93,4 +107,7 @@ public class ArticleService {
         return articleRepository.findByTitleContainingIgnoreCaseOrContentContainingIgnoreCase(query, query);
     }
 
+    public List<Article> getArticlesByUsername(String username) {
+        return articleRepository.findByEditHistoryUsername(username);
+    }
 }

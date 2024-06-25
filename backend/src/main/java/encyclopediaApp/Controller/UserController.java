@@ -1,5 +1,6 @@
 package encyclopediaApp.Controller;
 
+import encyclopediaApp.DTO.UserProfileDTO;
 import encyclopediaApp.Model.Role;
 import encyclopediaApp.Model.User;
 import encyclopediaApp.Service.UserService;
@@ -66,12 +67,5 @@ public class UserController {
         } else {
             return ResponseEntity.notFound().build();
         }
-    }
-
-    @PutMapping("/{id}/edit")
-    @PreAuthorize("hasAnyRole('ADMIN', 'MODERATOR', 'EDITOR')")
-    public ResponseEntity<User> updateUserEdits(@PathVariable int id) {
-        User updatedUser = userService.updateUserEdits(id);
-        return ResponseEntity.ok(updatedUser);
     }
 }

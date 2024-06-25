@@ -98,4 +98,10 @@ public class ArticleController {
     public List<Article> searchArticles(@RequestParam String query) {
         return articleService.searchArticles(query);
     }
+
+    @GetMapping("/users/{username}/contributions")
+    public ResponseEntity<List<Article>> getUserContributions(@PathVariable String username) {
+        List<Article> articles = articleService.getArticlesByUsername(username);
+        return ResponseEntity.ok(articles);
+    }
 }
