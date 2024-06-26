@@ -79,6 +79,7 @@
   
   /* Sidebar and Content */
   .main-container {
+    position: sticky;
     display: flex;
     flex: 1;
   }

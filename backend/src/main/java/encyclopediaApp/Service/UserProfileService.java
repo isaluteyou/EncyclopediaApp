@@ -1,11 +1,8 @@
 package encyclopediaApp.Service;
 
-import encyclopediaApp.DTO.UserProfileDTO;
-import encyclopediaApp.Model.User;
 import encyclopediaApp.Model.UserProfile;
 import encyclopediaApp.Repository.UserProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -21,5 +18,11 @@ public class UserProfileService {
 
     public UserProfile saveUserProfile(UserProfile userProfile) {
         return userProfileRepository.save(userProfile);
+    }
+
+    public String getUserAvatar(String username) {
+        return userProfileRepository.findByUser_Username(username)
+                .map(UserProfile::getAvatar)
+                .orElse(null);
     }
 }

@@ -1,5 +1,6 @@
 package encyclopediaApp.Controller;
 
+import encyclopediaApp.DTO.ArticleCommentaryDTO;
 import encyclopediaApp.DTO.ArticleRequest;
 import encyclopediaApp.DTO.UserContributionDTO;
 import encyclopediaApp.Model.Article;
@@ -80,6 +81,18 @@ public class ArticleController {
         return ResponseEntity.notFound().build();
     }
 
+    @PostMapping("/title/{title}/category")
+    public ResponseEntity<Article> addCategory(@PathVariable String title, @RequestBody String category) {
+        Article updatedArticle = articleService.addCategory(title, category);
+        return ResponseEntity.ok(updatedArticle);
+    }
+
+    @PostMapping("/title/{title}/commentary")
+    public ResponseEntity<Article> addCommentary(@PathVariable String title, @RequestBody ArticleCommentaryDTO commentaryDTO) {
+        Article updatedArticle = articleService.addCommentary(title, commentaryDTO.getUsername(), commentaryDTO.getContent());
+        return ResponseEntity.ok(updatedArticle);
+    }
+
     @DeleteMapping("/title/{title}")
     @PreAuthorize("hasAnyRole('ADMIN', 'MODERATOR')")
     public ResponseEntity<Void> deleteArticleByTitle(@PathVariable String title, Principal principal) {
@@ -104,5 +117,10 @@ public class ArticleController {
     public ResponseEntity<List<UserContributionDTO>> getUserContributions(@PathVariable String username) {
         List<UserContributionDTO> contributions = articleService.getUserContributions(username);
         return ResponseEntity.ok(contributions);
+    }
+
+    @GetMapping("/title/{title}/commentaries")
+    public List<ArticleCommentaryDTO> getCommentaries(@PathVariable String title) {
+        return articleService.getCommentaries(title);
     }
 }

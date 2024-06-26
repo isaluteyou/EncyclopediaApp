@@ -1,5 +1,6 @@
 package encyclopediaApp.Service;
 
+import encyclopediaApp.DTO.ArticleCommentaryDTO;
 import encyclopediaApp.DTO.UserContributionDTO;
 import encyclopediaApp.Events.ArticleEditedEvent;
 import encyclopediaApp.Model.ArchivedArticle;
@@ -18,11 +19,15 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ArticleService {
     @Autowired
     private ArticleRepository articleRepository;
+
+    @Autowired
+    private UserProfileService userProfileService;
 
     @Autowired
     private ArchivedArticleRepository archivedArticleRepository;
@@ -124,6 +129,46 @@ public class ArticleService {
 
         contributions.sort((a, b) -> b.getTimestamp().compareTo(a.getTimestamp()));
         return contributions;
+    }
+
+    public Article addCategory(String title, String category) {
+        Optional<Article> article = articleRepository.findByTitle(title);
+        if(article.isPresent()) {
+            article.get().getCategories().add(category);
+            return articleRepository.save(article.get());
+        } else {
+            return null;
+        }
+    }
+
+    public Article addCommentary(String title, String username, String content) {
+        Optional<Article> article = articleRepository.findByTitle(title);
+        Article.Commentary commentary = new Article.Commentary();
+        commentary.setUsername(username);
+        commentary.setTimestamp(LocalDateTime.now());
+        commentary.setContent(content);
+        if(article.isPresent()) {
+            article.get().getCommentaries().add(commentary);
+            return articleRepository.save(article.get());
+        } else {
+            return null;
+        }
+    }
+
+    public List<ArticleCommentaryDTO> getCommentaries(String title) {
+        Article article = articleRepository.findByTitle(title)
+                .orElseThrow(() -> new RuntimeException("Article not found"));
+
+        return article.getCommentaries().stream()
+                .sorted((c1, c2) -> c2.getTimestamp().compareTo(c1.getTimestamp()))
+                .map(commentary -> {
+                    ArticleCommentaryDTO dto = new ArticleCommentaryDTO();
+                    dto.setUsername(commentary.getUsername());
+                    dto.setTimestamp(commentary.getTimestamp());
+                    dto.setContent(commentary.getContent());
+                    dto.setAvatar(userProfileService.getUserAvatar(commentary.getUsername()));
+                    return dto;
+                }).collect(Collectors.toList());
     }
 
     public List<Article> searchArticles(String query) {

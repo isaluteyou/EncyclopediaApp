@@ -7,26 +7,41 @@ import './ArticleDetail.css';
 const ArticleDetail = () => {
   const { title } = useParams();
   const [article, setArticle] = useState(null);
+  const [newCommentary, setNewCommentary] = useState('');
+  const [commentaries, setCommentaries] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { user } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(`http://localhost:8000/api/articles/title/${title}`)
-      .then(response => {
+    const fetchArticle = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8000/api/articles/title/${title}`);
         setArticle(response.data);
         setLoading(false);
-      })
-      .catch(error => {
+      } catch (error) {
         if (error.response && error.response.status === 404) {
           setArticle(null);
         } else {
           setError('There was an error fetching the article.');
         }
         setLoading(false);
-      });
+      }
+    };
+
+    fetchArticle();
+    fetchCommentaries();
   }, [title]);
+
+  const fetchCommentaries = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8000/api/articles/title/${title}/commentaries`);
+      setCommentaries(response.data);
+    } catch (error) {
+      console.error('There was an error fetching the commentaries!', error);
+    }
+  };
 
   const handleDelete = async () => {
     const confirmed = window.confirm("Are you sure you want to delete this article?");
@@ -48,6 +63,31 @@ const ArticleDetail = () => {
 
   const handleCreateArticle = () => {
     navigate(`/create-article/${title}`);
+  };
+
+  const handleAddCommentary = async () => {
+    if (!newCommentary.trim()) return;
+
+    try {
+      const commentaryDTO = {
+        username: user.username,
+        content: newCommentary,
+        avatar: user.avatar,
+        timestamp: new Date().toISOString()
+      };
+
+      await axios.post(`http://localhost:8000/api/articles/title/${title}/commentary`, commentaryDTO, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+      fetchCommentaries();
+
+      setCommentaries(prevCommentaries => [...prevCommentaries, commentaryDTO]);
+      setNewCommentary('');
+    } catch (error) {
+      setError('There was an error adding the commentary.');
+    }
   };
 
   const convertToHtml = (text) => {
@@ -94,18 +134,48 @@ const ArticleDetail = () => {
           <div className="article-content">
             {convertToHtml(article.content)}
           </div>
+          <div className="article-commentaries">
+            <h1>Commentaries</h1>
+            <hr />
+            <textarea
+              value={newCommentary}
+              onChange={(e) => setNewCommentary(e.target.value)}
+              placeholder="Leave a comment about the article..."
+            ></textarea>
+            <button onClick={handleAddCommentary}>Add Commentary</button>
+            <ul>
+              {commentaries.map((comment, index) => (
+                <li key={index} className="comment-item">
+                <div className="comment-header">
+                <img src={`http://localhost:8000/uploads/${comment.avatar}`} alt={`${comment.username}'s avatar`} className="comment-avatar" />
+                    <div>
+                      <div className="comment-username">{comment.username}</div>
+                      <div className="comment-timestamp">{new Date(comment.timestamp).toLocaleString()}</div>
+                    </div>
+                </div>
+                <div className="comment-content">
+                  {comment.content}
+                </div>
+              </li>
+              ))}
+            </ul>
+          </div>
         </>
       ) : (
         <>
-          <h1>Article Not Found</h1>
+        <div className="article-header">
+          <h1>Article "{title}" Not Found</h1>
+        </div>
+          <hr />
           {user && (
-            <button onClick={handleCreateArticle} className="create-article-button">
-              Create Article
-            </button>
+            <div className="article-actions">
+              <button onClick={handleCreateArticle} className="create-button">Create Article</button>
+            </div>
           )}
           {!user && (
             <p>Please <Link to="/login">log in</Link> to create this article.</p>
           )}
+
         </>
       )}
     </div>

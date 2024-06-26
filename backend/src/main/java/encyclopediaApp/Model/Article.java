@@ -18,6 +18,10 @@ public class Article {
     private String content;
     private List<EditHistory> editHistory = new ArrayList<>();
 
+    private List<String> categories = new ArrayList<>();
+
+    private List<Commentary> commentaries = new ArrayList<>();
+
     public ObjectId getId() {
         return id;
     }
@@ -50,6 +54,22 @@ public class Article {
         this.editHistory = editHistory;
     }
 
+    public List<String> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<String> categories) {
+        this.categories = categories;
+    }
+
+    public List<Commentary> getCommentaries() {
+        return commentaries;
+    }
+
+    public void setCommentaries(List<Commentary> commentaries) {
+        this.commentaries = commentaries;
+    }
+
     public static class EditHistory {
         private String username;
         private LocalDateTime timestamp;
@@ -77,6 +97,36 @@ public class Article {
 
         public void setOldContent(String oldContent) {
             this.oldContent = oldContent;
+        }
+    }
+
+    public static class Commentary {
+        private String username;
+        private LocalDateTime timestamp;
+        private String content;
+
+        public String getUsername() {
+            return username;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
+
+        public LocalDateTime getTimestamp() {
+            return timestamp;
+        }
+
+        public void setTimestamp(LocalDateTime timestamp) {
+            this.timestamp = timestamp;
+        }
+
+        public String getContent() {
+            return content;
+        }
+
+        public void setContent(String content) {
+            this.content = content;
         }
     }
 }
