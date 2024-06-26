@@ -87,12 +87,6 @@ public class ArticleController {
         return ResponseEntity.ok(updatedArticle);
     }
 
-    @PostMapping("/title/{title}/commentary")
-    public ResponseEntity<Article> addCommentary(@PathVariable String title, @RequestBody ArticleCommentaryDTO commentaryDTO) {
-        Article updatedArticle = articleService.addCommentary(title, commentaryDTO.getUsername(), commentaryDTO.getContent());
-        return ResponseEntity.ok(updatedArticle);
-    }
-
     @DeleteMapping("/title/{title}")
     @PreAuthorize("hasAnyRole('ADMIN', 'MODERATOR')")
     public ResponseEntity<Void> deleteArticleByTitle(@PathVariable String title, Principal principal) {
@@ -119,8 +113,23 @@ public class ArticleController {
         return ResponseEntity.ok(contributions);
     }
 
+    // Commentaries
     @GetMapping("/title/{title}/commentaries")
     public List<ArticleCommentaryDTO> getCommentaries(@PathVariable String title) {
         return articleService.getCommentaries(title);
+    }
+
+    @PostMapping("/title/{title}/commentary")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MODERATOR', 'EDITOR')")
+    public ResponseEntity<Article> addCommentary(@PathVariable String title, @RequestBody ArticleCommentaryDTO commentaryDTO) {
+        Article updatedArticle = articleService.addCommentary(title, commentaryDTO.getUsername(), commentaryDTO.getContent());
+        return ResponseEntity.ok(updatedArticle);
+    }
+
+    @DeleteMapping("/title/{title}/commentary")
+    @PreAuthorize("authentication.name == #commentaryDTO.username or hasRole('ADMIN') or hasRole('MODERATOR')")
+    public ResponseEntity<Void> deleteCommentary(@PathVariable String title, @RequestBody ArticleCommentaryDTO commentaryDTO) {
+        articleService.deleteCommentary(title, commentaryDTO.getUsername(), commentaryDTO.getTimestamp());
+        return ResponseEntity.ok().build();
     }
 }

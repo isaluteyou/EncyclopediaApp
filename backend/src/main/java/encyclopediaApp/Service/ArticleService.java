@@ -171,6 +171,17 @@ public class ArticleService {
                 }).collect(Collectors.toList());
     }
 
+    public void deleteCommentary(String title, String username, LocalDateTime timestamp) {
+        Article article = articleRepository.findByTitle(title)
+                .orElseThrow(() -> new RuntimeException("Article not found"));
+
+        article.getCommentaries().removeIf(commentary ->
+                commentary.getUsername().equals(username) && commentary.getTimestamp().equals(timestamp)
+        );
+
+        articleRepository.save(article);
+    }
+
     public List<Article> searchArticles(String query) {
         return articleRepository.findByTitleContainingIgnoreCaseOrContentContainingIgnoreCase(query, query);
     }

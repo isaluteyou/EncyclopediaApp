@@ -1,5 +1,36 @@
-.article-detail {
+  .article-detail {
     padding: 20px;
+  }
+  
+  .article-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .article-header h1 {
+    margin: 0;
+  }
+  
+  .article-actions {
+    display: flex;
+    gap: 10px;
+  }
+
+  .article-actions-button {
+    background-color: #262438;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .article-actions-button:hover {
+    background-color: #3A384C;
   }
   
   .article-header {
@@ -42,20 +73,9 @@
     color: #bbb;
   }
 
-  .article-commentaries button {
-    padding: 10px 20px;
-    background-color: #262438;
-    color: #fff;
+  .add-commentary {
     display: block;
     margin: 10px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-
-  .article-commentaries button:hover {
-    background-color: #3A384C;
   }
 
   .article-content {
@@ -96,6 +116,10 @@
     font-weight: bold;
     margin-right: 10px;
   }
+
+  .comment-delete {
+    margin-right: 10px;
+  }
   
   .comment-timestamp {
     font-size: 0.85em;
@@ -105,4 +129,18 @@
   .comment-content {
     font-size: 1em;
     color: #fff;
+  }
+
+  .commentary-delete {
+    background-color: transparent;
+    border: none;
+    color: #ff4c4c;
+    cursor: pointer;
+    font-size: 0.9em;
+    margin-top: 20px;
+    transition: color 0.3s;
+  }
+
+  .commentary-delete:hover {
+    color: #ff0000;
   }

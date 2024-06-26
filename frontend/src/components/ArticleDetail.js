@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import axios from './axios';
 import { useAuth } from '../components/AuthContext';
 import './ArticleDetail.css';
@@ -90,6 +92,27 @@ const ArticleDetail = () => {
     }
   };
 
+  const handleDeleteCommentary = async (commentIndex) => {
+    const confirmed = window.confirm("Are you sure you want to delete this commentary?");
+    if (!confirmed) {
+      return;
+    }
+
+    try {
+      const commentary = commentaries[commentIndex];
+      await axios.delete(`http://localhost:8000/api/articles/title/${title}/commentary`, {
+        data: { username: commentary.username, timestamp: commentary.timestamp },
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+
+      fetchCommentaries();
+    } catch (error) {
+      setError('There was an error deleting the commentary.');
+    }
+  };
+
   const convertToHtml = (text) => {
     const paragraphs = text.split('\n\n');
     return paragraphs.map((paragraph, index) => (
@@ -123,10 +146,10 @@ const ArticleDetail = () => {
           <div className="article-header">
             <h1>{article.title}</h1>
             <div className="article-actions">
-              <button onClick={() => navigate(`/wiki/${title}/edit`)}>Edit</button>
-              <button onClick={() => navigate(`/wiki/${title}/history`)}>History</button>
+              <button className="article-actions-button" onClick={() => navigate(`/wiki/${title}/edit`)}>Edit</button>
+              <button className="article-actions-button" onClick={() => navigate(`/wiki/${title}/history`)}>History</button>
               {(userHasRole('ADMIN') || userHasRole('MODERATOR')) && (
-                <button onClick={handleDelete}>Delete</button>
+                <button className="article-actions-button" onClick={handleDelete}>Delete</button>
               )}
             </div>
           </div>
@@ -142,7 +165,7 @@ const ArticleDetail = () => {
               onChange={(e) => setNewCommentary(e.target.value)}
               placeholder="Leave a comment about the article..."
             ></textarea>
-            <button onClick={handleAddCommentary}>Add Commentary</button>
+            <button className="article-actions-button add-commentary" onClick={handleAddCommentary}>Add Commentary</button>
             <ul>
               {commentaries.map((comment, index) => (
                 <li key={index} className="comment-item">
@@ -151,6 +174,11 @@ const ArticleDetail = () => {
                     <div>
                       <div className="comment-username">{comment.username}</div>
                       <div className="comment-timestamp">{new Date(comment.timestamp).toLocaleString()}</div>
+                    </div>
+                    <div className="comment-delete">
+                        {user && (comment.username === user.username || userHasRole('ADMIN') || userHasRole('MODERATOR')) && (
+                        <button onClick={() => handleDeleteCommentary(index)} className="commentary-delete"><FontAwesomeIcon icon={faTrash}/> Delete</button>
+                       )}
                     </div>
                 </div>
                 <div className="comment-content">
