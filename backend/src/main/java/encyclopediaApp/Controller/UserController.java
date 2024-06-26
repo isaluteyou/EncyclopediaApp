@@ -3,6 +3,7 @@ package encyclopediaApp.Controller;
 import encyclopediaApp.DTO.UserProfileDTO;
 import encyclopediaApp.Model.Role;
 import encyclopediaApp.Model.User;
+import encyclopediaApp.Service.RoleService;
 import encyclopediaApp.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,9 @@ import java.util.Set;
 public class UserController {
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private RoleService roleService;
 
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
@@ -45,7 +49,7 @@ public class UserController {
 
             Set<Role> newRoles = new HashSet<>();
             for (Role role: userDetails.getRoles()) {
-                Role existingRole = userService.findRoleByName(role.getName())
+                Role existingRole = roleService.findRoleByName(role.getName())
                         .orElseThrow(() -> new RuntimeException("Role not found: " + role.getName()));
                 newRoles.add(existingRole);
             }

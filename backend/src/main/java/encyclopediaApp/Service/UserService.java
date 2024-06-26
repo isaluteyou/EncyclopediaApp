@@ -4,7 +4,6 @@ import encyclopediaApp.DTO.UserProfileDTO;
 import encyclopediaApp.Model.Role;
 import encyclopediaApp.Model.User;
 import encyclopediaApp.Model.UserProfile;
-import encyclopediaApp.Repository.RoleRepository;
 import encyclopediaApp.Repository.UserProfileRepository;
 import encyclopediaApp.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +24,10 @@ public class UserService implements UserDetailsService {
     private UserRepository userRepository;
 
     @Autowired
-    private RoleRepository roleRepository;
+    private UserProfileRepository userProfileRepository;
 
     @Autowired
-    private UserProfileRepository userProfileRepository;
+    private RoleService roleService;
 
 
     @Override
@@ -54,7 +53,7 @@ public class UserService implements UserDetailsService {
         user.setUsername(username);
         user.setPassword(password);
 
-        Role defaultRole = findRoleByName("EDITOR").orElseThrow(() -> new RuntimeException("Role not found"));
+        Role defaultRole = roleService.findRoleById(1).orElseThrow(() -> new RuntimeException("Role not found"));
         Set<Role> roles = new HashSet<>();
         roles.add(defaultRole);
         user.setRoles(roles);
@@ -99,11 +98,6 @@ public class UserService implements UserDetailsService {
         } else {
             return null;
         }
-    }
-
-    // Roles
-    public Optional<Role> findRoleByName(String name) {
-        return roleRepository.findByName(name);
     }
 
     // User Profiles
