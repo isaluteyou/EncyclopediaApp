@@ -1,6 +1,7 @@
 package encyclopediaApp.Controller;
 
 import encyclopediaApp.DTO.ArticleRequest;
+import encyclopediaApp.DTO.UserContributionDTO;
 import encyclopediaApp.Model.Article;
 import encyclopediaApp.Service.ArticleService;
 import org.bson.types.ObjectId;
@@ -100,8 +101,8 @@ public class ArticleController {
     }
 
     @GetMapping("/users/{username}/contributions")
-    public ResponseEntity<List<Article>> getUserContributions(@PathVariable String username) {
-        List<Article> articles = articleService.getArticlesByUsername(username);
-        return ResponseEntity.ok(articles);
+    public ResponseEntity<List<UserContributionDTO>> getUserContributions(@PathVariable String username) {
+        List<UserContributionDTO> contributions = articleService.getUserContributions(username);
+        return ResponseEntity.ok(contributions);
     }
 }

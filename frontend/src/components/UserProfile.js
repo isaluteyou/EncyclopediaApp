@@ -28,26 +28,10 @@ const UserProfile = () => {
         }
       };
 
-    const fetchContributions = async () => {
+      const fetchContributions = async () => {
         try {
           const response = await axios.get(`http://localhost:8000/api/articles/users/${username}/contributions`);
-          const articles = response.data;
-          
-          const edits = articles.flatMap(article => {
-            if (article.editHistory && Array.isArray(article.editHistory)) {
-              return article.editHistory
-                .filter(edit => edit.username === username) // filter by username
-                .map(edit => ({
-                  title: article.title,
-                  timestamp: edit.timestamp,
-                }));
-            } else {
-              return [];
-            }
-          });
-          
-          edits.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)); // sort to show recently edited articles
-          setContributions(edits);
+          setContributions(response.data);
         } catch (error) {
           console.error('There was an error fetching the user contributions!', error);
         }

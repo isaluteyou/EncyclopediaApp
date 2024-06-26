@@ -4,6 +4,7 @@ import encyclopediaApp.DTO.UserProfileDTO;
 import encyclopediaApp.Model.User;
 import encyclopediaApp.Model.UserProfile;
 import encyclopediaApp.Service.FileStorageService;
+import encyclopediaApp.Service.UserProfileService;
 import encyclopediaApp.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,9 +29,12 @@ public class UserProfileController {
     @Autowired
     private FileStorageService fileStorageService;
 
+    @Autowired
+    private UserProfileService userProfileService;
+
     @GetMapping("/{userId}")
     public ResponseEntity<UserProfile> getUserProfile(@PathVariable int userId) {
-        Optional<UserProfile> userProfile = userService.getUserProfile(userId);
+        Optional<UserProfile> userProfile = userProfileService.getUserProfile(userId);
         return userProfile.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
@@ -38,7 +42,7 @@ public class UserProfileController {
     public ResponseEntity<UserProfile> getUserProfileByUsername(@PathVariable String username) {
         Optional<User> user = userService.findByUsername(username);
         if (user.isPresent()) {
-            Optional<UserProfile> userProfile = userService.getUserProfile(user.get().getId());
+            Optional<UserProfile> userProfile = userProfileService.getUserProfile(user.get().getId());
             return userProfile.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
         }
         return ResponseEntity.notFound().build();
@@ -63,7 +67,7 @@ public class UserProfileController {
         Optional<User> user = userService.findByUsername(username);
 
         if (user.isPresent()) {
-            Optional<UserProfile> userProfileOpt = userService.getUserProfile(user.get().getId());
+            Optional<UserProfile> userProfileOpt = userProfileService.getUserProfile(user.get().getId());
             if (userProfileOpt.isPresent()) {
                 UserProfile userProfile = userProfileOpt.get();
                 if (file != null) {
@@ -74,7 +78,7 @@ public class UserProfileController {
                 userProfile.setGender(gender);
                 userProfile.setLocation(location);
                 userProfile.setAbout(about);
-                return ResponseEntity.ok(userService.saveUserProfile(userProfile));
+                return ResponseEntity.ok(userProfileService.saveUserProfile(userProfile));
             }
         }
         return ResponseEntity.notFound().build();

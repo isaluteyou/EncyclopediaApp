@@ -1,5 +1,6 @@
 package encyclopediaApp.Service;
 
+import encyclopediaApp.DTO.UserContributionDTO;
 import encyclopediaApp.Events.ArticleEditedEvent;
 import encyclopediaApp.Model.ArchivedArticle;
 import encyclopediaApp.Model.Article;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -101,6 +103,27 @@ public class ArticleService {
         } else {
             return null;
         }
+    }
+
+    public List<UserContributionDTO> getUserContributions(String username) {
+        List<Article> articles = articleRepository.findAll();
+        List<UserContributionDTO> contributions = new ArrayList<>();
+
+        for (Article article : articles) {
+            if (article.getEditHistory() != null) {
+                for (Article.EditHistory edit : article.getEditHistory()) {
+                    if (edit.getUsername().equals(username)) {
+                        UserContributionDTO contribution = new UserContributionDTO();
+                        contribution.setTitle(article.getTitle());
+                        contribution.setTimestamp(edit.getTimestamp());
+                        contributions.add(contribution);
+                    }
+                }
+            }
+        }
+
+        contributions.sort((a, b) -> b.getTimestamp().compareTo(a.getTimestamp()));
+        return contributions;
     }
 
     public List<Article> searchArticles(String query) {

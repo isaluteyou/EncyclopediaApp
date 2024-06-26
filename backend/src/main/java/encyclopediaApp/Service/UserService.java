@@ -4,7 +4,6 @@ import encyclopediaApp.DTO.UserProfileDTO;
 import encyclopediaApp.Model.Role;
 import encyclopediaApp.Model.User;
 import encyclopediaApp.Model.UserProfile;
-import encyclopediaApp.Repository.UserProfileRepository;
 import encyclopediaApp.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -24,11 +23,10 @@ public class UserService implements UserDetailsService {
     private UserRepository userRepository;
 
     @Autowired
-    private UserProfileRepository userProfileRepository;
-
-    @Autowired
     private RoleService roleService;
 
+    @Autowired
+    private UserProfileService userProfileService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -66,7 +64,7 @@ public class UserService implements UserDetailsService {
         // create a profile for each user
         UserProfile userProfile = new UserProfile();
         userProfile.setUser(savedUser);
-        userProfileRepository.save(userProfile);
+        userProfileService.saveUserProfile(userProfile);
     }
 
     public Optional<User> findByUsername(String username) {
@@ -98,15 +96,6 @@ public class UserService implements UserDetailsService {
         } else {
             return null;
         }
-    }
-
-    // User Profiles
-    public Optional<UserProfile> getUserProfile(int userId) {
-        return userProfileRepository.findByUserId(userId);
-    }
-
-    public UserProfile saveUserProfile(UserProfile userProfile) {
-        return userProfileRepository.save(userProfile);
     }
 
     public UserProfileDTO getUserProfileInfo(String username) {
