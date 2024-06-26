@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserAlt } from '@fortawesome/free-solid-svg-icons';
+import { useAuth } from '../components/AuthContext'
 import './Layout.css';
 
-const Layout = ({ children, isLoggedIn, username, onLogout }) => {
+const Layout = ({ children, username }) => {
+  const { user, logout } = useAuth();
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
 
@@ -13,12 +15,6 @@ const Layout = ({ children, isLoggedIn, username, onLogout }) => {
     if (searchTerm.trim() !== '') {
       navigate(`/search?query=${encodeURIComponent(searchTerm)}`);
     }
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    onLogout();
-    navigate('/');
   };
 
   return (
@@ -36,10 +32,10 @@ const Layout = ({ children, isLoggedIn, username, onLogout }) => {
             <button type="submit" className="header-button">Search</button>
           </form>
         <div className="header-right">
-          {isLoggedIn ? (
+            {user ? (
             <>
-              <span className="username"><FontAwesomeIcon icon={faUserAlt} /> {username}</span>
-              <button onClick={handleLogout} className="header-button">Logout</button>
+              <span className="username"><FontAwesomeIcon icon={faUserAlt} /> {user.username}</span>
+              <button onClick={logout} className="header-button">Logout</button>
             </>
           ) : (
             <>

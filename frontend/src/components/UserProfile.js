@@ -28,7 +28,7 @@ const UserProfile = () => {
         }
       };
 
-      const fetchContributions = async () => {
+    const fetchContributions = async () => {
         try {
           const response = await axios.get(`http://localhost:8000/api/articles/users/${username}/contributions`);
           setContributions(response.data);
