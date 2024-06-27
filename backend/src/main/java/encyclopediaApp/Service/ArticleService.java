@@ -16,9 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -131,14 +129,22 @@ public class ArticleService {
         return contributions;
     }
 
-    public Article addCategory(String title, String category) {
-        Optional<Article> article = articleRepository.findByTitle(title);
-        if(article.isPresent()) {
-            article.get().getCategories().add(category);
-            return articleRepository.save(article.get());
-        } else {
-            return null;
-        }
+    public void addCategories(String title, List<String> categories) {
+        Article article = articleRepository.findByTitle(title)
+                .orElseThrow(() -> new RuntimeException("Article not found"));
+        Set<String> uniqueCategories = new HashSet<>(article.getCategories());
+        uniqueCategories.addAll(categories);
+        article.setCategories(new ArrayList<>(uniqueCategories));
+        articleRepository.save(article);
+    }
+
+    public void removeCategories(String title, List<String> categories) {
+        Article article = articleRepository.findByTitle(title)
+                .orElseThrow(() -> new RuntimeException("Article not found"));
+        Set<String> uniqueCategories = new HashSet<>(article.getCategories());
+        categories.forEach(uniqueCategories::remove);
+        article.setCategories(new ArrayList<>(uniqueCategories));
+        articleRepository.save(article);
     }
 
     public Article addCommentary(String title, String username, String content) {

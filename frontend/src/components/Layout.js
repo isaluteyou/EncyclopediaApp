@@ -17,6 +17,10 @@ const Layout = ({ children, username }) => {
     }
   };
 
+  const userHasRole = (role) => {
+    return user && user.roles && user.roles.includes(role);
+  };
+
   return (
     <div className="layout">
       <header className="header">
@@ -34,7 +38,7 @@ const Layout = ({ children, username }) => {
         <div className="header-right">
             {user ? (
             <>
-              <span className="username"><FontAwesomeIcon icon={faUserAlt} /> {user.username}</span>
+              <span className="username"><FontAwesomeIcon icon={faUserAlt} /> <a href={`/profile/${user.username}`} style={{color: "white"}}>{user.username}</a></span>
               <button onClick={logout} className="header-button">Logout</button>
             </>
           ) : (
@@ -48,12 +52,16 @@ const Layout = ({ children, username }) => {
       </header>
       <div className="main-container">
         <nav className="sidebar">
-          <div className="sticky">
             <ul>
               <li><Link to="/">Home</Link></li>
               <li><Link to="/create-article">Create Article</Link></li>
             </ul>
-          </div>
+              {userHasRole('MODERATOR') && (
+              <><h3>Moderator</h3><ul>
+                <li><Link to="/moderator-dashboard">Moderator Dashboard</Link></li>
+
+              </ul></>
+              )}
         </nav>
         <main className="content">
           {children}

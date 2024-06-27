@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -81,12 +82,6 @@ public class ArticleController {
         return ResponseEntity.notFound().build();
     }
 
-    @PostMapping("/title/{title}/category")
-    public ResponseEntity<Article> addCategory(@PathVariable String title, @RequestBody String category) {
-        Article updatedArticle = articleService.addCategory(title, category);
-        return ResponseEntity.ok(updatedArticle);
-    }
-
     @DeleteMapping("/title/{title}")
     @PreAuthorize("hasAnyRole('ADMIN', 'MODERATOR')")
     public ResponseEntity<Void> deleteArticleByTitle(@PathVariable String title, Principal principal) {
@@ -111,6 +106,21 @@ public class ArticleController {
     public ResponseEntity<List<UserContributionDTO>> getUserContributions(@PathVariable String username) {
         List<UserContributionDTO> contributions = articleService.getUserContributions(username);
         return ResponseEntity.ok(contributions);
+    }
+
+    // Categories
+    @PostMapping("/title/{title}/categories")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MODERATOR', 'EDITOR')")
+    public ResponseEntity<Void> addCategories(@PathVariable String title, @RequestBody List<String> categories) {
+        articleService.addCategories(title, categories);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/title/{title}/categories")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MODERATOR', 'EDITOR')")
+    public ResponseEntity<Void> removeCategories(@PathVariable String title, @RequestBody List<String> categories) {
+        articleService.removeCategories(title, categories);
+        return ResponseEntity.ok().build();
     }
 
     // Commentaries

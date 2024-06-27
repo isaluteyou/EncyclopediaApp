@@ -1,0 +1,54 @@
+.moderator-dashboard {
+    padding: 20px;
+    color: #fff;
+  }
+  
+  .create-category, .categories-list {
+    margin-bottom: 20px;
+  }
+
+  .flex {
+    display: block;
+  }
+  
+  .create-category input, .create-category textarea {
+    width: 70%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .create-category button {
+    padding: 10px 20px;
+    background-color: #262438;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .create-category button:hover {
+    background-color: #3A384C;
+  }
+  
+  .error {
+    color: #ff0000;
+  }
+  
+  .success {
+    color: lime;
+  }
+  
+  .categories-list ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .categories-list li {
+    background-color: #000010;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+  }
+  

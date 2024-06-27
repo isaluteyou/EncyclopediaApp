@@ -2,6 +2,7 @@
 
 .layout {
     background-color: #0C090A;
+    color: #fff;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -21,6 +22,11 @@
 
   a:hover {
     color: #1500FF;
+  }
+
+  h2 {
+    border-bottom: 1px solid #fff;
+    padding-bottom: 7px;
   }
   
   /* Header */
@@ -125,4 +131,15 @@
     text-align: center;
     padding: 10px 0;
     z-index: 1000;
+  }
+
+  .alert {
+    background-color: #000010;
+    border: 1px solid #262438;
+    border-radius: 10px;
+    padding: 20px;
+    color: red;
+    font-weight: bold;
+    margin: 20px;
+    text-align: center;
   }

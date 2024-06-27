@@ -144,3 +144,49 @@
   .commentary-delete:hover {
     color: #ff0000;
   }
+
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-content {
+    background-color: #000010;
+    padding: 20px;
+    border-radius: 10px;
+    width: 50%;
+    max-width: 500px;
+    text-align: center;
+  }
+  
+  .modal-content select {
+    background-color: #262438;
+    border: none;
+    width: 100%;
+    height: 150px;
+    margin-bottom: 20px;
+  }
+
+  .modal-content select:focus {
+    border: none;
+    border: 1px solid #3A384C;
+  }
+  
+  .modal-content button {
+    background-color: #262438;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px;
+    text-decoration: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }

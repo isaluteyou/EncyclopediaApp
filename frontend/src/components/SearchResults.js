@@ -40,8 +40,8 @@ const SearchResults = () => {
       <ul>
         {articles.map((article) => (
           <li key={article.id} className="search-element">
-            <Link to={`/wiki/${article.title}`}>{article.title}</Link><br />
-            Content is: "{article.content.substring(0, 100)}..."
+            <Link to={`/wiki/${article.title}`} style={{fontSize: "22px"}}>{article.title}</Link><br />
+            "{article.content.substring(0, 100)}..."
           </li>
         ))}
       </ul>
