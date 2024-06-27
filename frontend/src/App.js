@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ArticleList from './components/ArticleList';
 import ArticleDetail from './components/ArticleDetail';
+import CategoryDetail from './components/CategoryDetail';
 import EditArticle from './components/EditArticle';
 import ArticleHistory from './components/ArticleHistory';
 import CreateArticle from './components/CreateArticle';
@@ -43,6 +44,7 @@ const App = () => {
             <Route path="/wiki/:title" element={<ArticleDetail />} />
             <Route path="/wiki/:title/edit" element={<EditArticle />} />
             <Route path="/wiki/:title/history" element={<ArticleHistory />} />
+            <Route path="/category/:categoryName" element={<CategoryDetail />} />
             <Route path="/create-article" element={<CreateArticleRoot />} />
             <Route path="/moderator-dashboard" element={<PrivateRoute><ModeratorDashboard /></PrivateRoute>} />
             <Route path="/create-article" element={<PrivateRoute><CreateArticle /></PrivateRoute>} />

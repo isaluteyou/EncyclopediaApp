@@ -195,4 +195,8 @@ public class ArticleService {
     public List<Article> getArticlesByUsername(String username) {
         return articleRepository.findByEditHistoryUsername(username);
     }
+
+    public List<Article> getArticlesByCategory(String category) {
+        return articleRepository.findByCategoriesContaining(category);
+    }
 }

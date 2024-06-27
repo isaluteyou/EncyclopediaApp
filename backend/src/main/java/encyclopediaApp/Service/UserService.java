@@ -87,14 +87,12 @@ public class UserService implements UserDetailsService {
         userRepository.deleteById(id);
     }
 
-    public User updateUserEdits(String username) {
+    public void updateUserEdits(String username) {
         Optional<User> optionalUser = userRepository.findByUsername(username);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             user.setNumberOfEdits(user.getNumberOfEdits() + 1);
-            return userRepository.save(user);
-        } else {
-            return null;
+            userRepository.save(user);
         }
     }
 

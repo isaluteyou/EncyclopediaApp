@@ -1,0 +1,39 @@
+.category-detail {
+    padding: 20px;
+    background-color: #121024;
+    color: #fff;
+  }
+  
+  .category-detail h1 {
+    font-size: 2em;
+    margin-bottom: 10px;
+  }
+  
+  .category-detail p {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+  }
+  
+  .category-detail h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+  }
+  
+  .category-detail ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .category-detail ul li {
+    margin-bottom: 10px;
+  }
+  
+  .category-detail ul li a {
+    color: #00bfff;
+    text-decoration: none;
+  }
+  
+  .category-detail ul li a:hover {
+    color: #1500FF;
+  }
+  

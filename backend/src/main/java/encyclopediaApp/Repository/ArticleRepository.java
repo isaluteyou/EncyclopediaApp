@@ -11,6 +11,7 @@ import java.util.Optional;
 @Repository
 public interface ArticleRepository extends MongoRepository<Article, ObjectId> {
     Optional<Article> findByTitle(String title);
+    List<Article> findByCategoriesContaining(String category);
     List<Article> findByTitleContainingIgnoreCaseOrContentContainingIgnoreCase(String title, String content);
     List<Article> findByEditHistoryUsername(String username);
 }

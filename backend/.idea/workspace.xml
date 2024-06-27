@@ -8,9 +8,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eeaf5954-abe2-42f8-b556-abf42b700317" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/ArticleDetail.css" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/ArticleDetail.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/ArticleDetail.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/ArticleDetail.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Layout.css" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Layout.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/components/Layout.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Layout.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

@@ -24,7 +24,7 @@ const Layout = ({ children, username }) => {
   return (
     <div className="layout">
       <header className="header">
-        <h2><Link to="/">Skyrim Encyclopedia</Link></h2>
+        <h3 style={{fontSize: "25px"}}><Link to="/">Skyrim Encyclopedia</Link></h3>
         <form onSubmit={handleSearch} className="search-form">
             <input
               type="text"
