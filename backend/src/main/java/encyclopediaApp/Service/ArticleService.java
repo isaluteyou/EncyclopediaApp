@@ -1,10 +1,12 @@
 package encyclopediaApp.Service;
 
 import encyclopediaApp.DTO.ArticleCommentaryDTO;
+import encyclopediaApp.DTO.CategoryDetailDTO;
 import encyclopediaApp.DTO.UserContributionDTO;
 import encyclopediaApp.Events.ArticleEditedEvent;
 import encyclopediaApp.Model.ArchivedArticle;
 import encyclopediaApp.Model.Article;
+import encyclopediaApp.Model.Category;
 import encyclopediaApp.Model.User;
 import encyclopediaApp.Repository.ArchivedArticleRepository;
 import encyclopediaApp.Repository.ArticleRepository;
@@ -162,9 +164,13 @@ public class ArticleService {
     }
 
     public List<ArticleCommentaryDTO> getCommentaries(String title) {
-        Article article = articleRepository.findByTitle(title)
-                .orElseThrow(() -> new RuntimeException("Article not found"));
+        Optional<Article> optionalArticle = articleRepository.findByTitle(title);
 
+        if (optionalArticle.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        Article article = optionalArticle.get();
         return article.getCommentaries().stream()
                 .sorted((c1, c2) -> c2.getTimestamp().compareTo(c1.getTimestamp()))
                 .map(commentary -> {

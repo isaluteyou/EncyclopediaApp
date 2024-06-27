@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from './axios';
 import { useAuth } from '../components/AuthContext';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import './EditArticle.css';
 
 const CreateArticle = () => {
@@ -28,9 +30,9 @@ const CreateArticle = () => {
         navigate(`/wiki/${capitalizedTitle}`);
       } catch (error) {
         if (error.response && error.response.data) {
-            setError(error.response.data); // display backend error
+          setError(JSON.stringify(error.response.data)); // display backend error
         } else {
-            setError('There was an error creating the article.');
+          setError('There was an error creating the article.');
         }
       }
     } else {
@@ -40,7 +42,7 @@ const CreateArticle = () => {
 
   return (
     <div>
-      <h1>Creating {title}</h1>
+      <h1>Creating {capitalizeFirstLetter(title)}</h1>
       <hr />
       {error && <p className="error-message">{error}</p>}
       <form onSubmit={handleSubmit} className="edit-article-form">
@@ -57,12 +59,12 @@ const CreateArticle = () => {
         </div>
         <div className="form-group">
           <label>Content:</label><br />
-          <textarea
+          <ReactQuill
             value={content}
-            onChange={(e) => setContent(e.target.value)}
-            required
-            className="form-control"
-            rows="25"
+            onChange={setContent}
+            requried
+            modules={CreateArticle.modules}
+            formats={CreateArticle.formats}
           />
         </div>
         <button type="submit" className="edit-article-button">Create Article</button>
@@ -70,5 +72,27 @@ const CreateArticle = () => {
     </div>
   );
 };
+
+CreateArticle.modules = {
+  toolbar: [
+    [{ 'header': '1'}, {'header': '2'}],
+    [{size: []}],
+    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+    [{'list': 'ordered'}, {'list': 'bullet'}, 
+     {'indent': '-1'}, {'indent': '+1'}],
+    ['link', 'video'],
+    ['clean']                                        
+  ],
+  clipboard: {
+    matchVisual: false,
+  }
+};
+
+CreateArticle.formats = [
+  'header', 'font', 'size',
+  'bold', 'italic', 'underline', 'strike', 'blockquote',
+  'list', 'bullet', 'indent',
+  'link', 'image', 'video'
+];
 
 export default CreateArticle;

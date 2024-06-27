@@ -47,7 +47,7 @@ const App = () => {
             <Route path="/category/:categoryName" element={<CategoryDetail />} />
             <Route path="/create-article" element={<CreateArticleRoot />} />
             <Route path="/moderator-dashboard" element={<PrivateRoute><ModeratorDashboard /></PrivateRoute>} />
-            <Route path="/create-article" element={<PrivateRoute><CreateArticle /></PrivateRoute>} />
+            <Route path="/create-article/:title" element={<CreateArticle />} />
             <Route path="/profile/:username" element={<UserProfile />} />
             <Route path="/profile/:username/edit" element={<EditUserProfile />} />
             <Route path="/search" element={<SearchResults />} />

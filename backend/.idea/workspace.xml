@@ -7,9 +7,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eeaf5954-abe2-42f8-b556-abf42b700317" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Layout.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Layout.js" afterDir="false" />
-    </list>
+    <list default="true" id="eeaf5954-abe2-42f8-b556-abf42b700317" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
