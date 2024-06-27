@@ -85,7 +85,8 @@
   }
   
   .sidebar {
-    top: 50px;
+    position: fixed;
+    top: 80px;
     width: 175px;
     background-color: #000010;
     border-right: 2px solid #00bfff;
@@ -109,6 +110,7 @@
   }
   
   .content {
+    margin-left: 200px;
     flex: 1;
     background-color: #121024;
     color: #fff;
@@ -122,4 +124,5 @@
     border-top: 2px solid #00bfff;
     text-align: center;
     padding: 10px 0;
+    z-index: 1000;
   }

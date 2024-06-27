@@ -113,20 +113,6 @@ const ArticleDetail = () => {
     }
   };
 
-  const convertToHtml = (text) => {
-    const paragraphs = text.split('\n\n');
-    return paragraphs.map((paragraph, index) => (
-      <p key={index}>
-        {paragraph.split('\n').map((line, lineIndex) => (
-          <React.Fragment key={lineIndex}>
-            {line}
-            <br />
-          </React.Fragment>
-        ))}
-      </p>
-    ));
-  };
-
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -154,9 +140,7 @@ const ArticleDetail = () => {
             </div>
           </div>
           <hr />
-          <div className="article-content">
-            {convertToHtml(article.content)}
-          </div>
+          <div className="article-content" dangerouslySetInnerHTML={{ __html: article.content }}></div>
           <div className="article-commentaries">
             <h1>Commentaries</h1>
             <hr />

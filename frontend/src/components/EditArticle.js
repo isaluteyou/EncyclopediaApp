@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from './axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import './EditArticle.css';
 
 const EditArticle = () => {
@@ -27,6 +29,10 @@ const EditArticle = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setArticle({ ...article, [name]: value });
+  };
+
+  const handleContentChange = (value) => {
+    setArticle({ ...article, content: value });
   };
 
   const handleSubmit = async (e) => {
@@ -69,11 +75,11 @@ const EditArticle = () => {
         </div>
         <div>
           <label>Content:</label><br />
-          <textarea
-            name="content"
+          <ReactQuill
             value={article.content}
-            onChange={handleInputChange}
-            rows="25"
+            onChange={handleContentChange}
+            modules={EditArticle.modules}
+            formats={EditArticle.formats}
           />
         </div>
         <button type="submit">Save</button>
@@ -81,5 +87,27 @@ const EditArticle = () => {
     </div>
   );
 };
+
+EditArticle.modules = {
+  toolbar: [
+    [{ 'header': '1'}, {'header': '2'}],
+    [{size: []}],
+    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+    [{'list': 'ordered'}, {'list': 'bullet'}, 
+     {'indent': '-1'}, {'indent': '+1'}],
+    ['link', 'video'],
+    ['clean']                                        
+  ],
+  clipboard: {
+    matchVisual: false,
+  }
+};
+
+EditArticle.formats = [
+  'header', 'font', 'size',
+  'bold', 'italic', 'underline', 'strike', 'blockquote',
+  'list', 'bullet', 'indent',
+  'link', 'image', 'video'
+];
 
 export default EditArticle;

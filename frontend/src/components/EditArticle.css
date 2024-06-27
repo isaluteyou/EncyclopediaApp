@@ -34,6 +34,7 @@
 .edit-article-form button {
   width: 200px;
   padding: 10px;
+  margin: 15px;
   font-size: 1.2em;
   background-color: #262438;
   color: white;
@@ -45,4 +46,63 @@
 
 .edit-article-form button:hover {
   background-color: #3A384C;
+}
+
+.ql-container {
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.ql-toolbar {
+  background-color: #f3f3f3;
+  border: 1px solid #ccc;
+  border-bottom: none;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+.ql-editor {
+  min-height: 200px;
+  color: #000;
+  background-color: #fff;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+.ql-toolbar button {
+  color: #333;
+  background-color: #e9e9e9;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.ql-toolbar button:hover {
+  background-color: #d9d9d9;
+}
+
+.ql-toolbar button.ql-active {
+  background-color: #ccc;
+}
+
+.ql-editor::before {
+  color: #999;
+}
+
+.ql-editor a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.ql-editor a:hover {
+  text-decoration: underline;
+}
+
+.ql-editor .ql-picker-options {
+  background-color: #f3f3f3;
+  border: 1px solid #ccc;
+}
+
+.ql-editor .ql-picker-item.ql-selected {
+  color: #007bff;
 }

@@ -48,10 +48,12 @@ const Layout = ({ children, username }) => {
       </header>
       <div className="main-container">
         <nav className="sidebar">
-          <ul>
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/create-article">Create Article</Link></li>
-          </ul>
+          <div className="sticky">
+            <ul>
+              <li><Link to="/">Home</Link></li>
+              <li><Link to="/create-article">Create Article</Link></li>
+            </ul>
+          </div>
         </nav>
         <main className="content">
           {children}
