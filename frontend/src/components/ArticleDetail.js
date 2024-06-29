@@ -12,6 +12,7 @@ const ArticleDetail = () => {
   const [newCommentary, setNewCommentary] = useState('');
   const [commentaries, setCommentaries] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [commentaryError, setCommentaryError] = useState(null);
   const [error, setError] = useState(null);
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -83,28 +84,33 @@ const ArticleDetail = () => {
   };
 
   const handleAddCommentary = async () => {
-    if (!newCommentary.trim()) return;
+      if (!newCommentary.trim()) return;
 
-    try {
-      const commentaryDTO = {
-        username: user.username,
-        content: newCommentary,
-        avatar: user.avatar,
-        timestamp: new Date().toISOString()
-      };
+      if(user) {
+        try {
+          const commentaryDTO = {
+            username: user.username,
+            content: newCommentary,
+            avatar: user.avatar,
+            timestamp: new Date().toISOString()
+          };
 
-      await axios.post(`http://localhost:8000/api/articles/title/${title}/commentary`, commentaryDTO, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
-      });
-      fetchCommentaries();
+          await axios.post(`http://localhost:8000/api/articles/title/${title}/commentary`, commentaryDTO, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+          });
+          fetchCommentaries();
 
-      setCommentaries(prevCommentaries => [...prevCommentaries, commentaryDTO]);
-      setNewCommentary('');
-    } catch (error) {
-      setError('There was an error adding the commentary.');
-    }
+          setCommentaries(prevCommentaries => [...prevCommentaries, commentaryDTO]);
+          setNewCommentary('');
+          } catch (commentaryError) {
+            setCommentaryError('There was an error adding the commentary.');
+          }
+      }
+      else {
+        setCommentaryError('You must be logged in to add a commentary.');
+      }
   };
 
   const handleDeleteCommentary = async (commentIndex) => {
@@ -211,7 +217,7 @@ const ArticleDetail = () => {
             <h2>Categories</h2>
             <p>{selectedCategories.map((category, index) => (
               <React.Fragment key={index}>
-                {category}
+                <a href={`../category/${category}`}>{category}</a>
                 {index < selectedCategories.length - 1 && ' | '}
               </React.Fragment>
             ))}</p>
@@ -219,6 +225,9 @@ const ArticleDetail = () => {
           <div className="article-commentaries">
             <h1>Commentaries</h1>
             <hr />
+            {commentaryError && (
+            <p className="error"> {commentaryError}</p>
+            )}
             <textarea
               value={newCommentary}
               onChange={(e) => setNewCommentary(e.target.value)}
@@ -231,7 +240,7 @@ const ArticleDetail = () => {
                   <div className="comment-header">
                     <img src={`http://localhost:8000/uploads/${comment.avatar}`} alt={`${comment.username}'s avatar`} className="comment-avatar" />
                     <div>
-                      <div className="comment-username">{comment.username}</div>
+                      <div className="comment-username"><a href={`../profile/${comment.username}`}>{comment.username}</a></div>
                       <div className="comment-timestamp">{new Date(comment.timestamp).toLocaleString()}</div>
                     </div>
                     <div className="comment-delete">

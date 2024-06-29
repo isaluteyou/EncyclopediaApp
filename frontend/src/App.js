@@ -11,7 +11,9 @@ import SearchResults from './components/SearchResults';
 import UserProfile from './components/UserProfile';
 import EditUserProfile from './components/EditUserProfile';
 import ModeratorDashboard from './components/ModeratorDashboard';
+import AdminDashboard from './components/AdminDashboard';
 import PrivateRoute from './components/PrivateRoute';
+import PrivateRouteAdmin from './components/PrivateRouteAdmin';
 import SignUp from './components/SignUp';
 import Login from './components/LogIn';
 import { AuthProvider, useAuth } from './components/AuthContext';
@@ -47,6 +49,7 @@ const App = () => {
             <Route path="/category/:categoryName" element={<CategoryDetail />} />
             <Route path="/create-article" element={<CreateArticleRoot />} />
             <Route path="/moderator-dashboard" element={<PrivateRoute><ModeratorDashboard /></PrivateRoute>} />
+            <Route path="/admin-dashboard" element={<PrivateRouteAdmin><AdminDashboard /></PrivateRouteAdmin>} />
             <Route path="/create-article/:title" element={<CreateArticle />} />
             <Route path="/profile/:username" element={<UserProfile />} />
             <Route path="/profile/:username/edit" element={<EditUserProfile />} />

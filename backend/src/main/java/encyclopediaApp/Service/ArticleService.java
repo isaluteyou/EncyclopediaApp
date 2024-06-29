@@ -1,16 +1,14 @@
 package encyclopediaApp.Service;
 
+import encyclopediaApp.Annotation.CheckBanned;
 import encyclopediaApp.DTO.ArticleCommentaryDTO;
-import encyclopediaApp.DTO.CategoryDetailDTO;
 import encyclopediaApp.DTO.UserContributionDTO;
 import encyclopediaApp.Events.ArticleEditedEvent;
+import encyclopediaApp.Exception.CustomException;
 import encyclopediaApp.Model.ArchivedArticle;
 import encyclopediaApp.Model.Article;
-import encyclopediaApp.Model.Category;
-import encyclopediaApp.Model.User;
 import encyclopediaApp.Repository.ArchivedArticleRepository;
 import encyclopediaApp.Repository.ArticleRepository;
-import encyclopediaApp.Repository.UserRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -27,13 +25,13 @@ public class ArticleService {
     private ArticleRepository articleRepository;
 
     @Autowired
-    private UserProfileService userProfileService;
-
-    @Autowired
     private ArchivedArticleRepository archivedArticleRepository;
 
     @Autowired
     private ApplicationEventPublisher eventPublisher;
+
+    @Autowired
+    private UserProfileService userProfileService;
 
     public List<Article> getAllArticles() {
         return articleRepository.findAll();
@@ -48,6 +46,7 @@ public class ArticleService {
     }
 
     @Transactional
+    @CheckBanned
     public Article saveArticle(Article article, String username) {
         String capitalizedTitle = article.getTitle().substring(0, 1).toUpperCase() +
                 article.getTitle().substring(1); // capitalize first letter before saving to collection
@@ -70,6 +69,7 @@ public class ArticleService {
         return articleRepository.save(article);
     }
 
+    @CheckBanned
     public void deleteArticle(String title, String deletedBy) {
         Optional<Article> article = articleRepository.findByTitle(title);
         if (article.isPresent()) {
@@ -85,6 +85,7 @@ public class ArticleService {
         }
     }
 
+    @CheckBanned
     public Article updateArticle(ObjectId id, Article articleDetails, String username) {
         Optional<Article> articleOptional = articleRepository.findById(id);
 
@@ -131,6 +132,7 @@ public class ArticleService {
         return contributions;
     }
 
+    @CheckBanned
     public void addCategories(String title, List<String> categories) {
         Article article = articleRepository.findByTitle(title)
                 .orElseThrow(() -> new RuntimeException("Article not found"));
@@ -140,6 +142,7 @@ public class ArticleService {
         articleRepository.save(article);
     }
 
+    @CheckBanned
     public void removeCategories(String title, List<String> categories) {
         Article article = articleRepository.findByTitle(title)
                 .orElseThrow(() -> new RuntimeException("Article not found"));
@@ -149,6 +152,7 @@ public class ArticleService {
         articleRepository.save(article);
     }
 
+    @CheckBanned
     public Article addCommentary(String title, String username, String content) {
         Optional<Article> article = articleRepository.findByTitle(title);
         Article.Commentary commentary = new Article.Commentary();
@@ -183,6 +187,7 @@ public class ArticleService {
                 }).collect(Collectors.toList());
     }
 
+    @CheckBanned
     public void deleteCommentary(String title, String username, LocalDateTime timestamp) {
         Article article = articleRepository.findByTitle(title)
                 .orElseThrow(() -> new RuntimeException("Article not found"));
@@ -196,10 +201,6 @@ public class ArticleService {
 
     public List<Article> searchArticles(String query) {
         return articleRepository.findByTitleContainingIgnoreCaseOrContentContainingIgnoreCase(query, query);
-    }
-
-    public List<Article> getArticlesByUsername(String username) {
-        return articleRepository.findByEditHistoryUsername(username);
     }
 
     public List<Article> getArticlesByCategory(String category) {

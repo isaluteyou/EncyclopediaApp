@@ -36,7 +36,7 @@
     background-color: #0C090A;
     color: #fff;
     padding: 5px 20px;
-    border-bottom: 2px solid #00bfff;
+    border-bottom: 2px solid #262438;
     text-align: left;
     z-index: 1000;
     display: flex;
@@ -95,7 +95,7 @@
     top: 80px;
     width: 175px;
     background-color: #000010;
-    border-right: 2px solid #00bfff;
+    border-right: 2px solid #262438;
     padding: 15px;
     height: calc(100vh - 50px);
     overflow-y: auto;
@@ -127,12 +127,13 @@
   .footer {
     background-color: #0C090A;
     color: #fff;
-    border-top: 2px solid #00bfff;
+    border-top: 2px solid #262438;
     text-align: center;
     padding: 10px 0;
     z-index: 1000;
   }
 
+  /* Alert message */
   .alert {
     background-color: #000010;
     border: 1px solid #262438;

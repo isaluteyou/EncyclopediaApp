@@ -1,0 +1,26 @@
+.admin-dashboard {
+    padding: 20px;
+    color: #fff;
+}
+
+.section input {
+    margin: 2px;
+    padding: 5px;
+}
+
+.section button {
+    background-color: #262438;
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    margin-left: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.section button:hover {
+    background-color: #3A384C;
+  }

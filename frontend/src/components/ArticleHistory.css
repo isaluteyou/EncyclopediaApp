@@ -15,9 +15,10 @@
   .old-content {
     max-width: 100%;
     overflow-x: auto;
-    background-color: #28283a;
+    background-color: #000010;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #3A384C;
+    font-size: 14px;
     border-radius: 5px;
     margin-top: 10px;
   }
@@ -30,13 +31,13 @@
   button {
     margin-top: 5px;
     padding: 5px 10px;
-    background-color: #007bff;
-    color: white;
+    background-color: #262438;
+    color: #fff;
     border: none;
     border-radius: 3px;
     cursor: pointer;
   }
   
   button:hover {
-    background-color: #0056b3;
+    background-color: #3A384C;
   }

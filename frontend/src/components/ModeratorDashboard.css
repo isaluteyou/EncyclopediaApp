@@ -46,9 +46,22 @@
   }
   
   .categories-list li {
-    background-color: #000010;
-    padding: 10px;
-    margin-bottom: 10px;
+    padding: 2px;
     border-radius: 5px;
+  }
+
+  .archived-articles-list li {
+    cursor: pointer;
+  }
+
+  .archived-article-content {
+    margin-top: 20px;
+    background-color: #000010;
+    padding: 20px;
+    border: 1px solid #262438;
+  }
+  
+  .archived-article-content h3 {
+    margin-top: 0;
   }
   

@@ -56,10 +56,16 @@ const Layout = ({ children, username }) => {
               <li><Link to="/">Home</Link></li>
               <li><Link to="/create-article">Create Article</Link></li>
             </ul>
-              {userHasRole('MODERATOR') && (
+              {(userHasRole('MODERATOR') || userHasRole('ADMIN')) && (
               <><h3>Moderator</h3><ul>
                 <li><Link to="/moderator-dashboard">Moderator Dashboard</Link></li>
 
+              </ul></>
+              )}
+              {userHasRole('ADMIN') && (
+              <><h3>Admin</h3><ul>
+                <li><Link to="/admin-dashboard">Admin Dashboard</Link></li>
+                
               </ul></>
               )}
         </nav>

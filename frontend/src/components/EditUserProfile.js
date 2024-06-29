@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from './axios';
 import { useAuth } from '../components/AuthContext';
-//import './EditUserProfile.css';
+import './EditUserProfile.css';
 
 const EditUserProfile = () => {
   const { username } = useParams();
@@ -75,7 +75,7 @@ const EditUserProfile = () => {
     <div className="edit-user-profile">
       <h1>Edit {username}'s Profile</h1>
       <form onSubmit={handleSubmit}>
-        <div>
+        <div className='edit-user-profile-item'>
           <label>Age:</label>
           <input
             type="number"
@@ -84,7 +84,7 @@ const EditUserProfile = () => {
             onChange={handleInputChange}
           />
         </div>
-        <div>
+        <div className='edit-user-profile-item'>
           <label>Gender:</label>
           <input
             type="text"
@@ -93,7 +93,7 @@ const EditUserProfile = () => {
             onChange={handleInputChange}
           />
         </div>
-        <div>
+        <div className='edit-user-profile-item'>
           <label>Location:</label>
           <input
             type="text"
@@ -102,7 +102,7 @@ const EditUserProfile = () => {
             onChange={handleInputChange}
           />
         </div>
-        <div>
+        <div className='edit-user-profile-item'>
           <label>About:</label>
           <textarea
             name="about"
@@ -111,7 +111,7 @@ const EditUserProfile = () => {
             maxLength="150"
           />
         </div>
-        <div>
+        <div className='edit-user-profile-item'>
           <label>Avatar:</label>
           <input
             type="file"

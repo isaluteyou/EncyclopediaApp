@@ -9,19 +9,35 @@ const ModeratorDashboard = () => {
   const [newCategory, setNewCategory] = useState({ name: '', description: '' });
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
+  const [archivedArticles, setArchivedArticles] = useState([]);
+  const [selectedArticle, setSelectedArticle] = useState(null);
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await axios.get('http://localhost:8000/api/categories');
-        setCategories(response.data);
-      } catch (error) {
-        console.error('There was an error fetching the categories!', error);
-      }
-    };
-
     fetchCategories();
+    fetchArchivedArticles();
   }, []);
+
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get('http://localhost:8000/api/categories');
+      setCategories(response.data);
+    } catch (error) {
+      console.error('There was an error fetching the categories!', error);
+    }
+  };
+
+  const fetchArchivedArticles = async () => {
+    try {
+      const response = await axios.get('http://localhost:8000/api/archived-articles', {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+      setArchivedArticles(response.data);
+    } catch (error) {
+      console.error('There was an error fetching the archived articles!', error);
+    }
+  };
 
   const handleCreateCategory = async () => {
     if (!newCategory.name.trim()) {
@@ -43,6 +59,10 @@ const ModeratorDashboard = () => {
       setError('There was an error creating the category');
       setSuccess(null);
     }
+  };
+
+  const handleViewContent = (article) => {
+    setSelectedArticle(article);
   };
 
   return (
@@ -72,15 +92,35 @@ const ModeratorDashboard = () => {
         </div>
       </div>
       <div className="categories-list">
-        <h2>Existing Categories</h2>
+        <h3>Existing Categories</h3>
         <ul>
           {categories.map((category) => (
             <li key={category.id}>
-              <strong>{category.name}</strong>: {category.description}
+              <strong><a href={`../category/${category.name}`}>{category.name}</a></strong> - {category.description}
             </li>
           ))}
         </ul>
       </div>
+      <h2>Archived Articles</h2>
+        <div className='archived-articles-list'>
+          <ul>
+            {archivedArticles.map((article) => (
+              <li key={article.id}>
+                <a onClick={() => handleViewContent(article)}>
+                  {article.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <h3>Content of deleted article</h3>
+        <hr />
+        {selectedArticle && (
+          <div className="archived-article-content">
+            <h3>{selectedArticle.title}</h3>
+            <div dangerouslySetInnerHTML={{ __html: selectedArticle.content }} />
+          </div>
+        )}
     </div>
   );
 };

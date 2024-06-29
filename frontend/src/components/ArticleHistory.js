@@ -8,7 +8,7 @@ const ArticleHistory = () => {
   const [article, setArticle] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [expandedHistory, setExpandedHistory] = useState({}); // To manage the expanded/collapsed state
+  const [expandedHistory, setExpandedHistory] = useState({});
 
   useEffect(() => {
     axios.get(`http://localhost:8000/api/articles/title/${title}`)
