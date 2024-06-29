@@ -2,6 +2,8 @@ package encyclopediaApp.Service;
 
 import encyclopediaApp.Annotation.CheckBanned;
 import encyclopediaApp.DTO.ArticleCommentaryDTO;
+import encyclopediaApp.DTO.RecentChanges;
+import encyclopediaApp.DTO.RecentChangesByDate;
 import encyclopediaApp.DTO.UserContributionDTO;
 import encyclopediaApp.Events.ArticleEditedEvent;
 import encyclopediaApp.Exception.CustomException;
@@ -15,6 +17,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -197,6 +200,25 @@ public class ArticleService {
         );
 
         articleRepository.save(article);
+    }
+
+    public List<RecentChangesByDate> getRecentChanges() {
+        List<Article> articles = articleRepository.findAll();
+        List<RecentChanges> changes = articles.stream()
+                .flatMap(article -> article.getEditHistory().stream()
+                        .map(edit -> new RecentChanges(
+                                article.getTitle(),
+                                edit.getUsername(),
+                                edit.getTimestamp()
+                        )))
+                .collect(Collectors.toList());
+
+        Map<LocalDate, List<RecentChanges>> groupedByDate = changes.stream()
+                .collect(Collectors.groupingBy(change -> change.getTimestamp().toLocalDate()));
+
+        return groupedByDate.entrySet().stream()
+                .map(entry -> new RecentChangesByDate(entry.getKey(), entry.getValue()))
+                .collect(Collectors.toList());
     }
 
     public List<Article> searchArticles(String query) {

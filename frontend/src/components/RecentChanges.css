@@ -1,0 +1,37 @@
+.recent-changes {
+    padding: 20px;
+  }
+  
+  .recent-changes h1 {
+    margin-bottom: 20px;
+  }
+  
+  .recent-changes li {
+    padding: 10px;
+    border-radius: 5px;
+  }
+
+  
+  .recent-changes a {
+    color: #00bfff;
+  }
+  
+  .recent-changes a:hover {
+    color: #1500FF;
+  }
+
+  .expand-button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #262438;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .expand-button:hover {
+    background-color: #3A384C;
+  }

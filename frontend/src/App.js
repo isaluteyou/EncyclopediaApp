@@ -10,6 +10,7 @@ import CreateArticleRoot from './components/CreateArticleRoot';
 import SearchResults from './components/SearchResults';
 import UserProfile from './components/UserProfile';
 import EditUserProfile from './components/EditUserProfile';
+import RecentChanges from './components/RecentChanges';
 import ModeratorDashboard from './components/ModeratorDashboard';
 import AdminDashboard from './components/AdminDashboard';
 import PrivateRoute from './components/PrivateRoute';
@@ -48,6 +49,7 @@ const App = () => {
             <Route path="/wiki/:title/history" element={<ArticleHistory />} />
             <Route path="/category/:categoryName" element={<CategoryDetail />} />
             <Route path="/create-article" element={<CreateArticleRoot />} />
+            <Route path="/recent-changes" element={<RecentChanges />} />
             <Route path="/moderator-dashboard" element={<PrivateRoute><ModeratorDashboard /></PrivateRoute>} />
             <Route path="/admin-dashboard" element={<PrivateRouteAdmin><AdminDashboard /></PrivateRouteAdmin>} />
             <Route path="/create-article/:title" element={<CreateArticle />} />
