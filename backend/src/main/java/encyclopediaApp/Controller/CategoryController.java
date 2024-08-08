@@ -1,7 +1,6 @@
 package encyclopediaApp.Controller;
 
 import encyclopediaApp.DTO.CategoryDetailDTO;
-import encyclopediaApp.Model.Article;
 import encyclopediaApp.Model.Category;
 import encyclopediaApp.Service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;

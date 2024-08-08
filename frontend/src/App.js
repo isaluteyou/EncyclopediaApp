@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useParams } from 'react-router-dom';
 import ArticleList from './components/ArticleList';
 import ArticleDetail from './components/ArticleDetail';
 import CategoryDetail from './components/CategoryDetail';
@@ -13,11 +13,12 @@ import EditUserProfile from './components/EditUserProfile';
 import RecentChanges from './components/RecentChanges';
 import ModeratorDashboard from './components/ModeratorDashboard';
 import AdminDashboard from './components/AdminDashboard';
+import SemiPrivateRoute from './components/SemiPrivateRoute';
 import PrivateRoute from './components/PrivateRoute';
 import PrivateRouteAdmin from './components/PrivateRouteAdmin';
 import SignUp from './components/SignUp';
 import Login from './components/LogIn';
-import { AuthProvider, useAuth } from './components/AuthContext';
+import { AuthProvider } from './components/AuthContext';
 import Layout from './components/Layout';
 
 const App = () => {
@@ -32,6 +33,15 @@ const App = () => {
       setIsLoggedIn(true);
     }
   }, []);
+
+  const ProfileEditRoute = () => {
+    const { username } = useParams();
+    return (
+      <SemiPrivateRoute profileOwner={username}>
+        <EditUserProfile />
+      </SemiPrivateRoute>
+    );
+  };
 
   const handleLogout = () => {
     setUsername('');
@@ -54,7 +64,7 @@ const App = () => {
             <Route path="/admin-dashboard" element={<PrivateRouteAdmin><AdminDashboard /></PrivateRouteAdmin>} />
             <Route path="/create-article/:title" element={<CreateArticle />} />
             <Route path="/profile/:username" element={<UserProfile />} />
-            <Route path="/profile/:username/edit" element={<EditUserProfile />} />
+            <Route path="/profile/:username/edit" element={<ProfileEditRoute />} />
             <Route path="/search" element={<SearchResults />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login onLogin={(username) => { setUsername(username); setIsLoggedIn(true); }} />} />

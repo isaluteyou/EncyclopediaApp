@@ -55,6 +55,7 @@ const Layout = ({ children, username }) => {
             <ul>
               <li><Link to="/">Home</Link></li>
               <li><Link to="/create-article">Create Article</Link></li>
+              <li><Link to="/recent-changes">Recent Changes</Link></li>
             </ul>
               {(userHasRole('MODERATOR') || userHasRole('ADMIN')) && (
               <><h3>Moderator</h3><ul>
